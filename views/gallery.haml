@@ -1,0 +1,8 @@
+#directories
+  - directories.each do |dir|
+    %div{ :class => "preview"}
+      %a{ :href => "http://flickr.webschuur.com/#{dir.name}/",
+          :style => "background-image: url(http://flickr.webschuur.com/#{dir.thumb};"}
+      %span
+        dir.title
+
