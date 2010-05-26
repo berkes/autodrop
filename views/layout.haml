@@ -1,6 +1,8 @@
 %html
   %head
-    %title Webschuur.com. PHOTOS  &ndash; [@TODO:gallery or imagename]
+    %title
+      Webschuur.com. PHOTOS  &ndash;
+      = options.title
     %link{  :rel => "stylesheet",
             :href =>"http://flickr.webschuur.com//themes/fuckflickr/css/stylesheet.css",
             :type   => "text/css",
@@ -18,7 +20,7 @@
             :class => "rss"}
           %img{:src => "http://flickr.webschuur.com//themes/fuckflickr/images/feed-icon32x32.png"}
         %a{:href => "http://flickr.webschuur.com/"}
-          Webschuur.com. PHOTOS
+          = options.title
     #main
       = yield
     #footer
