@@ -1,21 +1,21 @@
-%a{ :name => image.name }
+%a{ :name => @image.title }
 %h2
-  image.name
+  = @image.title
 .thumb
-  %a{ :title => image.name,
-      :href => image.original_src }
-    %img{ :src => image.src,
-          :alt => image.name,
-          :title => image.name }
+  %a{ :title => @image.title,
+      :href => @image.src }
+    %img{ :src => @image.src,
+          :alt => @image.title,
+          :title => @image.title }
   .info
     %p.description @TODO: exif parsing.006
     %p.meta
-      %a.short-name{ :href => image.permalink } #
-      %a.hi-res { :href => image.original_src} Hi-Res Image
+      %a.short-name{ :href => @image.permalink } #
+      %a.hi-res { :href => @image.src } Hi-Res Image
       %span.embed
         embed
         %input{:class => "embed-code",
                :type => "text",
                :size => "24",
-               :value => "&lt;a href=&quot;http://flickr.webschuur.com//Dour09/#zeil_is_cool_achtergrondje.jpg&quot;&gt;&lt;img src=&quot;http://flickr.webschuur.com//data/Dour09/web/zeil_is_cool_achtergrondje.jpg&quot; alt=&quot;zeil_is_cool_achtergrondje&quot; title=&quot;zeil_is_cool_achtergrondje&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;"
+               :value => "&lt;a href=&quot;http://flickr.webschuur.com//Dour09/#zeil_is_cool_achtergrondje.jpg&quot;&gt;&lt;img src=&quot;http://flickr.webschuur.com//data/Dour09/web/zeil_is_cool_achtergrondje.jpg&quot; alt=&quot;zeil_is_cool_achtergrondje&quot; title=&quot;zeil_is_cool_achtergrondje&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;"}
 
