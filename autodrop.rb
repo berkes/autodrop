@@ -5,12 +5,17 @@ require 'haml'
 #require 'rdropbox'
 
 require 'configuration'
+require 'dropbox'
+
+drop = DropboxController.new
 
 get '/' do
+  @galleries = drop.dirs(options.directory)
   haml :index
 end
 
 get '/gallery/:path' do
+  @images = drop.images(params[:path], options.directory)
   haml :gallery
 end
 
