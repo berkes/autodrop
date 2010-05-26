@@ -1,8 +1,8 @@
 #directories
   - @images.each do |img|
     %div{ :class => "preview"}
-      %a{ :href => "/#{img}",
-          :style => "background-image: url(/#{img};"}
+      %a{ :href => "#{img.permalink}",
+          :style => "background-image: url(#{img.src};"}
       %span
-        dir.title
+        = img.title
 
