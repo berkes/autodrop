@@ -1,0 +1,165 @@
+body {
+  font-size: 10px;
+  font-family: Geneva, Arial, sans-serif;
+}
+
+a {
+  color: blue;
+  &:hover {
+    background-color: #ff0085;
+    color: white;
+  }
+}
+
+p, h1, h2, h3, h4, h5 {
+  margin: 0;
+  padding: 2px 0;
+}
+
+#container {
+  min-width: 980px;
+}
+
+#header {
+  padding: 0px 20px 10px 20px;
+  a {
+    text-decoration: none;
+    font-weight: bold;
+  }
+  h1 {
+    margin: 0;
+    padding: 0;
+    display: inline;
+    clear: both;
+    font-size: 1em;
+  }
+  #logo
+    a {
+      border-bottom: 2px solid transparent; display: block;
+      margin: 2px 0 5px 0;
+      &:hover {
+        border-bottom: 2px solid #ff0085;
+      }
+      img {background-color: #FFFFFF; float: left;}
+    }
+    #fuckflickr-info {
+      color: #ff0085;
+      margin: 25px 0 0 30px;
+      width: 270px;
+      float: left;
+    }
+  }
+}
+
+#main {
+  padding: 0 20px 20px 20px;
+}
+
+#navigation {
+  clear: both;
+  display: block;
+  font-size: 13pt; line-height: 17pt;
+  background-color: #ffffaa;
+  padding: 12px 0 12px 20px;
+  margin: 0 0 15px 0;
+  height: 1%; overflow: visible;
+
+  .rss {
+    float: right;
+    margin-right: 35px;
+    margin-top: -4px;
+  }
+}
+
+#footer {
+  padding-top: 60px;
+  clear: both;
+  color: #999;
+}
+
+#directories {
+  margin: 10px 0 20px 0;
+  padding: 5px 10px;
+  min-height: 25px;
+}
+
+.directory {
+  a {
+  background: #efe url('../images/folder.png') no-repeat 0 50%;
+  border: 1px solid #d0f5d0;
+  padding: 15px 10px 15px 40px;
+  float: left;
+  margin-right: 10px;
+
+  &:hover {
+    background-color: #ff0085;
+    border: 1px solid #000;
+  }
+}
+
+#images {
+  clear: both;
+  padding: 20px 0;
+}
+
+#images .selected {
+  background: #fcf;
+}
+
+.thumb-wrapper {
+  width: 300px;
+  min-height: 260px;
+  float: left;
+  margin-right: 10px;
+}
+
+.thumb {
+  position:relative;
+  top: 0px;
+  left: 0px;
+  width: 300px;
+  height: 225px;
+  overflow: hidden;
+  text-align: center;
+  background-color: black;
+  margin-right: 10px;
+}
+
+.preview {
+  a {
+    float: left;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    display: block;
+    border: 5px solid transparent; /* pimped out on hover */
+    width: 110px;  /* 120px - 2*border */
+    height: 70px; /* 80px - 2*border */
+    background-position: -5px -5px;
+    overflow: hidden;
+    text-align: center;
+    background-color: black;
+    margin: 0 6px 5px 0;
+    padding-top: 10px;
+    text-decoration: none;
+  }
+  &:hover {
+    border: 5px solid #ff0085;
+  }
+  span {
+    background-color: #ffffff;
+    color: black;
+    padding: 2px 4px;
+  }
+}
+
+.description { padding: 8px 0 0 0; }
+.meta { padding: 0; margin-bottom: 30px; }
+
+.hi-res { margin-left: 5px; }
+.embed { margin-left: 8px; }
+
+
+h1#title {margin: 5px 0 3px 0; padding: 0; font-size: 24px; line-height: 27px;}
+h3#description {font-size: 13px; margin: 5px 0 3px 0; padding: 0; line-height: 15px; font-weight: normal;}
+
