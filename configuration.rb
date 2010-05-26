@@ -1,5 +1,6 @@
 configure :development do
-  set :title, 'Bèr Kessels` web album'
+  set :title, 'Bèr Kessels` pictures'
+  set :directory, 'Photos'
 end
 
 configure :production do
