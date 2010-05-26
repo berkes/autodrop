@@ -7,8 +7,6 @@ require 'haml'
 require 'configuration'
 
 get '/' do
-  @hello = "World"
-  @at_title = options.title
   haml :index
 end
 
