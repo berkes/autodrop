@@ -20,6 +20,7 @@ get '/gallery/:path' do
 end
 
 get '/gallery/:path/:file' do
+  @image = AutodropImage.new("#{options.directory}/#{params[:path]}/#{params[:file]}")
   haml :image
 end
 
