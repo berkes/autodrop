@@ -33,7 +33,7 @@ class DropboxController
       # then connect to dropbox
       # and fetch the metadata for the dir
       # For each file in that dir
-      Dir.glob("#{path}/*.{JPG,png,gif}").each do |img|
+      Dir.glob("#{path}/*.{jpg,png,gif}", File::FNM_CASEFOLD).each do |img|
         # is the file valid?
           # if so, then fetch the metadata for this file
           # and add this file and its metadata to the list of images.
