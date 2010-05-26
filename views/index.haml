@@ -1,2 +1,7 @@
 %h1 Hello!
+%ul
+  - @galleries.each do |g|
+    %li
+      %a{ :href => "gallery/#{g}" }
+        = g
 
