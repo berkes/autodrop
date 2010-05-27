@@ -1,27 +1,32 @@
 class DropboxController
+  # Pull sinatra config options into here.
+  def initialize(options)
+    @options = options
+  end
+
   # returns a list of directories in the "containing dir" as set in config. possibly an empty list.
   # or returns nil if an error occurred (e.g. dir is not found)
-  def dirs(container)
+  def dirs
     valid_dirs = []
+    session = Dropbox::Session.deserialize(@options.session)
     # do not continue if authorisation is false.
-    #return nil unless dropbox_session.authorized?
+    return nil unless session.authorized?
 
-    # if dir is a valid dir
-    if dir_is_valid?(container, container)
     # For each directory in that dir
-      Dir.foreach(container) do |d|
-        # is this dir valid? then add to a list of dirs
-        # else, continue, without adding to the list of dirs
-        valid_dirs << d if dir_is_valid?(d, container)
-      end
+    dir = session.directory('/')
+    dir.ls.each do |d|
+      # is this dir valid? then add to a list of dirs
+      # else, continue, without adding to the list of dirs
+      valid_dirs << d.path.sub( /^\//, '') if d.directory?
     end
+
     # return the list of dirs, even if it is an empty list.
     return valid_dirs
   end
 
   # returns a list of images in the given dir: possibly an empty list.
   # or returns nil if an error occurred (e.g. dir is not found)
-  def images(dir, container)
+  def images(dir)
     valid_images = []
     # do not continue if authorisation is false.
     #return nil unless dropbox_session.authorized?
@@ -29,7 +34,7 @@ class DropboxController
     # set dir to absolute: include the containing dir to the path.
     path = "#{container}/#{dir}"
     # if dir is a valid dir
-    if (dir_is_valid?(dir, container))
+    if (dir_is_valid?(dir))
       # then connect to dropbox
       # and fetch the metadata for the dir
       # For each file in that dir
@@ -51,35 +56,6 @@ class DropboxController
   end
 
   private
-  # see if an absolute directory, exists, in the right place and is readable.
-  def dir_is_valid?(dir, container)
-    valid = false
-    # is it a valid pattern (i.e. does not contain funny characters)?
-    # valid characters are: space, -, _, . A-z and 0-9, must start with alphanumeric
-    if /\A[A-z0-9]+[A-z0-9 -_.]*\Z/.match(dir)
-      valid = true
-    else
-      return false
-    end
-
-    # does the dir exist and is it a dir?
-    if (dir == container)
-      path = dir
-    else
-      path = "#{container}/#{dir}"
-    end
-
-    if Dir.new(path)
-      valid = true
-    else
-      return false
-    end
-
-    # is the dir public?
-      #@TODO not yet implemented
-
-    return valid
-  end
 
   # determines the thumbnail for the dir: looks for tumb.*, if that is an image, else for the latest added image.
   def thumb_for_dir(dir)

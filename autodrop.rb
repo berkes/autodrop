@@ -2,20 +2,19 @@
 require 'rubygems'
 require 'sinatra'
 require 'haml'
-#require 'rdropbox'
-
-require 'configuration'
 require 'dropbox'
 
-drop = DropboxController.new
+require 'configuration'
+require 'dropboxcontroller'
 
 get '/' do
-  @galleries = drop.dirs(options.directory)
+  drop = DropboxController.new(options)
+  @galleries = drop.dirs
   haml :index
 end
 
 get '/gallery/:path' do
-  @images = drop.images(params[:path], options.directory)
+  @images = drop.images(params[:path])
   haml :gallery
 end
 
