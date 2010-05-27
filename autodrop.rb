@@ -14,7 +14,9 @@ get '/' do
 end
 
 get '/gallery/:path' do
+  drop = DropboxController.new(options)
   @images = drop.images(params[:path])
+  p @images
   haml :gallery
 end
 
