@@ -8,12 +8,14 @@ require 'configuration'
 require 'dropboxcontroller'
 
 get '/' do
+  set :base_url, "#{request.env['rack.url_scheme']}://#{request.env['HTTP_HOST']}"
   drop = DropboxController.new(options)
   @galleries = drop.dirs
   haml :index
 end
 
 get '/gallery/:path' do
+  set :base_url, "#{request.env['rack.url_scheme']}://#{request.env['HTTP_HOST']}"
   drop = DropboxController.new(options)
   @images = drop.images(params[:path])
   p @images
@@ -23,8 +25,16 @@ end
 get '/gallery/:path/:file' do
   set :base_url, "#{request.env['rack.url_scheme']}://#{request.env['HTTP_HOST']}"
   drop = DropboxController.new(options)
-  @image = drop.image(params[:path], params[:file], options)
+  @image = drop.image(params[:path], params[:file])
   haml :image
+end
+
+get '/image/:size/:path/:file' do
+  set :base_url, "#{request.env['rack.url_scheme']}://#{request.env['HTTP_HOST']}"
+  drop = DropboxController.new(options)
+  thumb_path = drop.mirror_file(params[:path], params[:file], params[:size])
+
+  send_file(thumb_path)
 end
 
 get '/style.css' do

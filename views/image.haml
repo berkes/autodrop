@@ -3,15 +3,15 @@
   = @image.title
 .thumb
   %a{ :title => @image.title,
-      :href => @image.src }
-    %img{ :src => @image.src,
+      :href => @image.src('l')}
+    %img{ :src => @image.src('l'),
           :alt => @image.title,
           :title => @image.title }
   .info
     %p.description @TODO: exif parsing.006
     %p.meta
       %a.short-name{ :href => @image.permalink } #
-      %a.hi-res{ :href => @image.src } Hi-Res Image
+      %a.hi-res{ :href => @image.src('l') } Hi-Res Image
       %span.embed
         embed
         %input{:class => "embed-code",
