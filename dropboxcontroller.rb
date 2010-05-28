@@ -40,7 +40,7 @@ class DropboxController
     if list = dir.ls
       # For each file in that dir
       list.each do |file|
-        img = AutodropImage.new(file, gallery)
+        img = AutodropImage.new(file, gallery, @options)
         # if so, then fetch the metadata for this file
         # and add this file and its metadata to the list of images.
         valid_images << img if img.valid?
@@ -54,19 +54,43 @@ class DropboxController
     return valid_images
   end
 
-  def image(gallery, filename, options={})
+  def image(gallery, filename)
     session = Dropbox::Session.deserialize(@options.session)
     # do not continue if authorisation is false.
     return nil unless session.authorized?
 
     img = session.entry("/#{gallery}/#{filename}").metadata
-    img = AutodropImage.new(img, gallery, options)
+    img = AutodropImage.new(img, gallery, @options)
 
     if img.valid?
       return img
     else
       return nil
     end
+  end
+
+  # If local file do not exist, mirror it from dropbox, and return local filename
+  # Else just return the local filename
+  def mirror_file(gallery, file, size)
+    # only allow whitelisted sizes.
+    return nil unless ['m', 'l'].include? size
+
+    require 'ftools'
+
+    session = Dropbox::Session.deserialize(@options.session)
+    # do not continue if authorisation is false.
+    return nil unless session.authorized?
+
+    basedir = "public/#{gallery}/#{size}"
+    File.makedirs(basedir) unless File.exists?(basedir)
+    filepath = "#{basedir}/#{file}"
+    drop_path = "#{gallery}/#{file}"
+    if not File.exists? filepath
+      body = session.thumbnails(drop_path, size)
+      File.open(filepath, 'w') {|f| f.write(body) }
+    end
+
+    return filepath
   end
 
   private
@@ -101,8 +125,8 @@ class AutodropImage
     return title.gsub(/[_+]/, ' ').capitalize
   end
 
-  def src
-    src = "#{@options.base_url}/image#{@file.path}"
+  def src(size = 'm')
+    "#{@options.base_url}/image/#{size}#{@file.path}"
   end
 
   def path
