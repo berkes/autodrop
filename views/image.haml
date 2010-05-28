@@ -17,5 +17,5 @@
         %input{:class => "embed-code",
                :type => "text",
                :size => "24",
-               :value => "&lt;a href=&quot;http://flickr.webschuur.com//Dour09/#zeil_is_cool_achtergrondje.jpg&quot;&gt;&lt;img src=&quot;http://flickr.webschuur.com//data/Dour09/web/zeil_is_cool_achtergrondje.jpg&quot; alt=&quot;zeil_is_cool_achtergrondje&quot; title=&quot;zeil_is_cool_achtergrondje&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;"}
+               :value => "&lt;a href=&quot;#{@image.permalink}&quot;&gt;&lt;img src=&quot;#{@image.src('l')}&quot; alt=&quot;#{@image.title}&quot; title=&quot;#{@image.title}&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;"}
 
