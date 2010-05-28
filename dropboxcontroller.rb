@@ -33,7 +33,6 @@ class DropboxController
     # do not continue if authorisation is false.
     return nil unless session.authorized?
 
-
     # fetch the metadata for the dir
     dir = session.directory("/#{gallery}")
 
@@ -45,7 +44,6 @@ class DropboxController
         # if so, then fetch the metadata for this file
         # and add this file and its metadata to the list of images.
         valid_images << img if img.valid?
-p img.valid?
         # if not, continue, without adding to the list of images.
       end
     else
@@ -54,6 +52,21 @@ p img.valid?
     end
     # return the list of images, even if it is an empty list.
     return valid_images
+  end
+
+  def image(gallery, filename, options={})
+    session = Dropbox::Session.deserialize(@options.session)
+    # do not continue if authorisation is false.
+    return nil unless session.authorized?
+
+    img = session.entry("/#{gallery}/#{filename}").metadata
+    img = AutodropImage.new(img, gallery, options)
+
+    if img.valid?
+      return img
+    else
+      return nil
+    end
   end
 
   private
@@ -72,15 +85,16 @@ end
 class AutodropImage
   attr_reader :file, :gallery
 
-  def initialize(file, gallery)
+  def initialize(file, gallery, options={})
     @file = file
     @gallery = gallery
+    @options = options
   end
 
   # parse name, to human readable name
   def title
     #Flip off the part after the last dot, including that dot: find the filename without extensions
-    fragments = @file.basename.split('.')
+    fragments = basename.split('.')
     fragments.pop
     title = fragments.join('.')
 
@@ -88,7 +102,7 @@ class AutodropImage
   end
 
   def src
-    "/#{@file.path}"
+    src = "#{@options.base_url}/image#{@file.path}"
   end
 
   def path

@@ -21,7 +21,9 @@ get '/gallery/:path' do
 end
 
 get '/gallery/:path/:file' do
-  @image = AutodropImage.new("#{options.directory}/#{params[:path]}/#{params[:file]}")
+  set :base_url, "#{request.env['rack.url_scheme']}://#{request.env['HTTP_HOST']}"
+  drop = DropboxController.new(options)
+  @image = drop.image(params[:path], params[:file], options)
   haml :image
 end
 
