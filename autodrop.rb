@@ -18,7 +18,6 @@ get '/gallery/:path' do
   set :base_url, "#{request.env['rack.url_scheme']}://#{request.env['HTTP_HOST']}"
   drop = DropboxController.new(options)
   @images = drop.images(params[:path])
-  p @images
   haml :gallery
 end
 
