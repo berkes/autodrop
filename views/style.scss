@@ -42,7 +42,7 @@ img {
 #header {
   float:left;
   padding: 0 $gutter_l 10px $gutter_r;
-  border-bottom: 1px solid $dark;
+
   min-width: 980px;
   @include clearfix;
 
