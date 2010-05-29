@@ -1,10 +1,11 @@
 %html
   %head
     %title
-      Webschuur.com. PHOTOS  &ndash;
+      = options.title
+      &emdash;
       = options.title
     %link{  :rel => "stylesheet",
-            :href =>"http://flickr.webschuur.com//themes/fuckflickr/css/stylesheet.css",
+            :href =>"/style.css",
             :type   => "text/css",
             :media  => "screen",
             :charset => "utf-8"}
@@ -13,22 +14,18 @@
       #header
         #logo
           %a{:href => "/"}
-            %img{:src => "http://flickr.webschuur.com/themes/fuckflickr/images/logos/flickr.jpg"}
-      #navigation
-        %a{:href => "http://flickr.webschuur.com/rss",
-            :title => "RSS feed of new adds",
-            :class => "rss"}
-          %img{:src => "http://flickr.webschuur.com//themes/fuckflickr/images/feed-icon32x32.png"}
-        %a{:href => "http://flickr.webschuur.com/"}
-          = options.title
+            %img{:src => "/logo.png"}
+        %h1
+          %a{:href => "#{options.base_url}" }
+            = options.title
     #main
       = yield
     #footer
       Content licensed under a
       %a{:rel => "license",
          :href => "http://creativecommons.org/licenses/by-nc-sa/3.0/"}
-        Creative Commons Attribution-Noncommercial-Share Alike 3.0 Licens
-      \%emdash; powered by
-      %a{:href => "http://fffff.at/fuckflickr-info"}
+        Creative Commons Attribution-Noncommercial-Share Alike 3.0 License
+      &mdash; powered by
+      %a{:href => "http://github.com/berkes/autodrop"}
         Autodrop
 
