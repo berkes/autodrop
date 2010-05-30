@@ -16,7 +16,7 @@ class DropboxController
       # else, continue, without adding to the list of dirs
       gallery = AutodropGallery.new(d.path, @options) if d.directory?
 
-      galleries << gallery
+      galleries << gallery if gallery.valid?
     end
 
     # return the list of dirs, even if it is an empty list.
@@ -174,7 +174,7 @@ class AutodropGallery
   # parse name, to human readable name
   # @TODO: DRY!
   def title
-    return @gallery.gsub(/[_+]/, ' ').capitalize
+    return @gallery.gsub(/[_]+/, ' ').capitalize
   end
 
   def thumb(size = 'm')
@@ -184,6 +184,21 @@ class AutodropGallery
 
   def path
     File.join('gallery', @gallery)
+  end
+
+  def valid?
+   #ignore hidden directories
+   return nil if /^\.|[\+]/.match @gallery
+   #does the directory hold any files?
+   entries = @session.directory(@gallery).ls
+   return nil if entries.size <= 0
+   #is at least one of those files a valid image?
+   entries.each do |entry|
+     img = AutodropImage.new(entry, @gallery, @options)
+     return true if img.valid?
+   end
+
+   return nil
   end
 
   private
