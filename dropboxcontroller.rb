@@ -92,7 +92,7 @@ class AutodropImage
     fragments.pop
     title = fragments.join('.')
 
-    return title.gsub(/[_+]/, ' ').capitalize
+    return title.gsub(/[_]/, ' ').capitalize
   end
 
   def src(size = 'm')
