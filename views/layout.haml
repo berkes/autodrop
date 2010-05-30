@@ -3,8 +3,7 @@
   %head
     %title
       = options.title
-      &emdash;
-      = options.title
+      = " - #{@title}" if not @title == nil
     %link{  :rel => "stylesheet",
             :href =>"/style.css",
             :type   => "text/css",
@@ -19,6 +18,10 @@
         %h1
           %a{:href => "#{options.base_url}" }
             = options.title
+          - if (@path)
+            &mdash;
+            %a{:href => "#{options.base_url}/#{@path}" }
+              = " #{@title}"
     #main
       = yield
     #footer

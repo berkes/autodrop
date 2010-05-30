@@ -26,31 +26,11 @@ class DropboxController
   # returns a list of images in the given dir: possibly an empty list.
   # or returns nil if an error occurred (e.g. dir is not found)
   def images(gallery)
-    valid_images = []
+    gallery = AutodropGallery.new(gallery, @options)
 
-    session = Dropbox::Session.deserialize(@options.session)
-    # do not continue if authorisation is false.
-    return nil unless session.authorized?
-
+    return nil if not gallery.valid?
     # fetch the metadata for the dir
-    dir = session.directory("/#{gallery}")
-
-    # is it a dir?
-    if list = dir.ls
-      # For each file in that dir
-      list.each do |file|
-        img = AutodropImage.new(file, gallery, @options)
-        # if so, then fetch the metadata for this file
-        # and add this file and its metadata to the list of images.
-        valid_images << img if img.valid?
-        # if not, continue, without adding to the list of images.
-      end
-    else
-      # else return false
-      return nil
-    end
-    # return the list of images, even if it is an empty list.
-    return valid_images
+    return gallery
   end
 
   def image(gallery, filename)
@@ -157,7 +137,7 @@ class AutodropImage
 end
 
 class AutodropGallery
-  attr_reader :gallery
+  attr_reader :gallery, :entry
   def initialize(gallery, options)
     @gallery = gallery
     @options = options
@@ -171,8 +151,19 @@ class AutodropGallery
     @session.directory(@gallery)
   end
 
+  def images
+    valid_images =[]
+    @session.directory(@gallery).ls.each do |file|
+      img = AutodropImage.new(file, gallery, @options)
+      # if so, then fetch the metadata for this file
+      # and add this file and its metadata to the list of images.
+      valid_images << img if img.valid?
+      # if not, continue, without adding to the list of images.
+    end
+    return valid_images
+  end
+
   # parse name, to human readable name
-  # @TODO: DRY!
   def title
     return @gallery.gsub(/[_]+/, ' ').capitalize
   end
