@@ -7,21 +7,20 @@ class DropboxController
   # returns a list of directories in the "containing dir" as set in config. possibly an empty list.
   # or returns nil if an error occurred (e.g. dir is not found)
   def dirs
-    valid_dirs = []
-    session = Dropbox::Session.deserialize(@options.session)
-    # do not continue if authorisation is false.
-    return nil unless session.authorized?
+    galleries = []
+    root_dir = AutodropGallery.new('/', @options)
 
     # For each directory in that dir
-    dir = session.directory('/')
-    dir.ls.each do |d|
+    root_dir.directory.ls.each do |d|
       # is this dir valid? then add to a list of dirs
       # else, continue, without adding to the list of dirs
-      valid_dirs << d.path.sub( /^\//, '') if d.directory?
+      gallery = AutodropGallery.new(d.path, @options) if d.directory?
+
+      galleries << gallery
     end
 
     # return the list of dirs, even if it is an empty list.
-    return valid_dirs
+    return galleries
   end
 
   # returns a list of images in the given dir: possibly an empty list.
@@ -81,7 +80,7 @@ class DropboxController
     # do not continue if authorisation is false.
     return nil unless session.authorized?
 
-    basedir = "public/#{gallery}/#{size}"
+    basedir = "#{@options.cache_dir}/#{gallery}/#{size}"
     File.makedirs(basedir) unless File.exists?(basedir)
     filepath = "#{basedir}/#{file}"
     drop_path = "#{gallery}/#{file}"
@@ -91,16 +90,6 @@ class DropboxController
     end
 
     return filepath
-  end
-
-  private
-
-  # determines the thumbnail for the dir: looks for tumb.*, if that is an image, else for the latest added image.
-  def thumb_for_dir(dir)
-    # if the dir contains an image thumb.* return that as thumb
-    # else
-      # loop trough all images in this dir
-      # and return the last added one.
   end
 end
 
@@ -158,6 +147,51 @@ class AutodropImage
 
   def basename
     @file.path.split('/').pop
+  end
+end
+
+class AutodropGallery
+  attr_reader :gallery
+  def initialize(gallery, options)
+    @gallery = gallery
+    @options = options
+
+    @session = Dropbox::Session.deserialize(@options.session)
+    # do not continue if authorisation is false.
+    # @TODO raise error, not return nil /# return nil unless session.authorized?
+  end
+
+  def directory
+    @session.directory(@gallery)
+  end
+
+  # parse name, to human readable name
+  # @TODO: DRY!
+  def title
+    return @gallery.gsub(/[_+]/, ' ').capitalize
+  end
+
+  def thumb(size = 'm')
+    # if the dir contains an image thumb.* return that as thumb
+
+    # else
+      # loop trough all images in this dir
+      # and return the last added one.
+    "#{@options.base_url}/image/#{size}/thumb.jpg"
+  end
+
+  def path
+    File.join('gallery', @gallery)
+  end
+
+  private
+  def mirror_thumbnail
+    # connect to remote, open dir, list entries
+    # is there a file with name thumb.*
+    # is that a valid image?
+     # mirror its medium size.
+    # else, take the last added image (in time) from that dir
+     # mirror its medium size.
   end
 end
 
