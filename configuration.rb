@@ -1,5 +1,6 @@
 configure :development do
-  set :title, 'Bèr Kessels` pictures'
+  set :title, 'berkes` pictures'
+  set :cache_dir, 'photos'
 
   #You can get a serialised session by running authenticate.rb (@TODO)
   set :session, '---
