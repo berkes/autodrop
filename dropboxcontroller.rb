@@ -68,28 +68,9 @@ class DropboxController
     end
   end
 
-  # If local file do not exist, mirror it from dropbox, and return local filename
-  # Else just return the local filename
-  def mirror_file(gallery, file, size)
-    # only allow whitelisted sizes.
-    return nil unless ['m', 'l'].include? size
-
-    require 'ftools'
-
-    session = Dropbox::Session.deserialize(@options.session)
-    # do not continue if authorisation is false.
-    return nil unless session.authorized?
-
-    basedir = "#{@options.cache_dir}/#{gallery}/#{size}"
-    File.makedirs(basedir) unless File.exists?(basedir)
-    filepath = "#{basedir}/#{file}"
-    drop_path = "#{gallery}/#{file}"
-    if not File.exists? filepath
-      body = session.thumbnails(drop_path, size)
-      File.open(filepath, 'w') {|f| f.write(body) }
-    end
-
-    return filepath
+  def mirror_file(path, file, size = 'm')
+    img = AutodropImage.new(file, path, @options)
+    img.mirror_file size
   end
 end
 
@@ -136,7 +117,7 @@ class AutodropImage
     # does the file have thumbnails?
     return false unless @file.thumb_exists
     # is the file not the special, reserved thumb.*? (see thumb_for_dir)
-    return false if basename.match /^thumb\.[A-z]*$/
+    # @TODO: return false if basename.match /^thumb\.[A-z]*$/
     return true
   end
 
@@ -147,6 +128,31 @@ class AutodropImage
 
   def basename
     @file.path.split('/').pop
+  end
+
+  # If local file do not exist, mirror it from dropbox, and return local filename
+  # Else just return the local filename
+  def mirror_file(size)
+    # only allow whitelisted sizes.
+    return nil unless ['m', 'l'].include? size
+
+    require 'ftools'
+
+    #TODO DRY
+    session = Dropbox::Session.deserialize(@options.session)
+    # do not continue if authorisation is false.
+    return nil unless session.authorized?
+
+    basedir = "#{@options.cache_dir}/#{gallery}/#{size}"
+    File.makedirs(basedir) unless File.exists?(basedir)
+    filepath = "#{basedir}/#{@file}"
+    drop_path = "#{@gallery}/#{@file}"
+    if not File.exists? filepath
+      body = session.thumbnails(drop_path, size)
+      File.open(filepath, 'w') {|f| f.write(body) }
+    end
+
+    return filepath
   end
 end
 
@@ -172,12 +178,8 @@ class AutodropGallery
   end
 
   def thumb(size = 'm')
-    # if the dir contains an image thumb.* return that as thumb
-
-    # else
-      # loop trough all images in this dir
-      # and return the last added one.
-    "#{@options.base_url}/image/#{size}/thumb.jpg"
+    thumb = mirror_thumbnail
+    return thumb
   end
 
   def path
@@ -186,12 +188,27 @@ class AutodropGallery
 
   private
   def mirror_thumbnail
+    imgs =[]
     # connect to remote, open dir, list entries
-    # is there a file with name thumb.*
-    # is that a valid image?
-     # mirror its medium size.
-    # else, take the last added image (in time) from that dir
-     # mirror its medium size.
+    entries = @session.directory(@gallery).ls.sort{|a, b| a.modified <=> b.modified }
+    entries.each do |entry|
+      if not entry.is_dir #is marked on dropbox as file
+        if entry.thumb_exists #only TRUE when it is a file and omits many none-images
+          # is that a valid image?
+          img = AutodropImage.new(entry, @gallery, @options)
+          if img.valid?
+            # is there a file with name thumb.*
+            if /thumb\.[A-z]$/.match entry.path
+              return img.src
+            else # take the last added image (in time) from that dir
+              imgs << img
+            end #thumb.jpg or not thumb.jpg
+          end #valid image
+        end #file has thumb
+      end #is_file
+    end #each
+
+    return imgs.last.src if imgs.size > 0
   end
 end
 
