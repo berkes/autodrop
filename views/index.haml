@@ -3,7 +3,7 @@
   - @galleries.each do |gallery|
     %div{ :class => "preview"}
       %a{ :href => "#{gallery.path}",
-          :style => "background-image: url(#{gallery.thumb('m')});"}
+          :style => "background-image: url('#{gallery.thumb('m')}');"}
         %span
           = gallery.title
 
