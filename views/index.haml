@@ -1,7 +1,9 @@
 %h1 Hello!
-%ul
-  - @galleries.each do |g|
-    %li
-      %a{ :href => "gallery/#{g}" }
-        = g
+#directories
+  - @galleries.each do |gallery|
+    %div{ :class => "preview"}
+      %a{ :href => "#{gallery.path}",
+          :style => "background-image: url(#{gallery.thumb('m')});"}
+        %span
+          = gallery.title
 

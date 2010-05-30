@@ -36,7 +36,3 @@ get '/image/:size/:path/:file' do
   send_file(thumb_path)
 end
 
-get '/style.css' do
-  sass :style
-end
-
