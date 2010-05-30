@@ -1,0 +1,8 @@
+#directories
+  - @gallery.images.each do |img|
+    %div{ :class => "preview"}
+      %a{ :href => "#{img.permalink}",
+          :style => "background-image: url('#{img.src('m')}');"}
+        %span
+          = img.path
+

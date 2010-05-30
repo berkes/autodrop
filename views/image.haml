@@ -1,0 +1,21 @@
+%a{ :name => @image.title }
+%h2
+  = @image.title
+.thumb
+  %a{ :title => @image.title,
+      :href => @image.src('l')}
+    %img{ :src => @image.src('l'),
+          :alt => @image.title,
+          :title => @image.title }
+  .info
+    %p.description
+    %p.meta
+      %a.short-name{ :href => @image.permalink } #
+      %a.hi-res{ :href => @image.src('l') } Hi-Res Image
+      %span.embed
+        embed
+        %input{:class => "embed-code",
+               :type => "text",
+               :size => "24",
+               :value => "&lt;a href=&quot;#{@image.permalink}&quot;&gt;&lt;img src=&quot;#{@image.src('l')}&quot; alt=&quot;#{@image.title}&quot; title=&quot;#{@image.title}&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;"}
+
