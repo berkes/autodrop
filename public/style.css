@@ -1,0 +1,93 @@
+body {
+  font-size: 10px;
+  font-family: Geneva, Arial, sans-serif;
+  color: #666666; }
+
+a {
+  color: blue; }
+  a:hover {
+    background-color: #ff0085;
+    color: white; }
+
+img {
+  border: 0; }
+
+#container {
+  min-width: 980px; }
+
+#header {
+  float: left;
+  padding: 0 20px 10px 20px;
+  min-width: 980px;
+  display: inline-block; }
+  #header:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden; }
+  * html #header {
+    height: 1px; }
+  #header #logo {
+    float: left; }
+    #header #logo a {
+      margin: 2px 0 5px 0; }
+  #header h1 {
+    float: left;
+    padding: 0 2em;
+    font-size: 2em; }
+
+#main {
+  padding: 20px 20px 20px 20px;
+  clear: both; }
+
+#footer {
+  padding-top: 60px;
+  clear: both;
+  color: #666666; }
+
+#directories {
+  margin: 10px 0 20px 0;
+  padding: 5px 10px;
+  min-height: 25px; }
+  #directories .preview a {
+    float: left;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    display: block;
+    border: 5px solid transparent;
+    /* pimped out on hover */
+    width: 110px;
+    /* 120px - 2*border */
+    height: 70px;
+    /* 80px - 2*border */
+    background-position: -5px -5px;
+    overflow: hidden;
+    text-align: center;
+    background-color: black;
+    margin: 0 6px 5px 0;
+    padding-top: 10px;
+    text-decoration: none; }
+    #directories .preview a:hover {
+      border: 5px solid #ff0085; }
+    #directories .preview a span {
+      background-color: white;
+      color: #666666;
+      padding: 2px 4px; }
+
+#images {
+  clear: both;
+  padding: 20px 0; }
+  #images .selected {
+    background: #fcf; }
+
+.meta {
+  padding: 0;
+  margin-bottom: 30px; }
+
+.hi-res {
+  margin-left: 5px; }
+
+.embed {
+  margin-left: 8px; }
