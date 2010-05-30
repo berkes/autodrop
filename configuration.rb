@@ -1,5 +1,5 @@
 configure :development do
-  set :title, 'Bèr Kessels` pictures'
+  set :title, 'berkes` pictures'
 
   #You can get a serialised session by running authenticate.rb (@TODO)
   set :session, '---
