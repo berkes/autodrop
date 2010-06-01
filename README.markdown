@@ -1,7 +1,7 @@
 # Autodrop
 
-A (very) simple adminless webapp on [Sintra](http://www.sinatrarb.com/) with rbdropbox to render an imagegallery with images from dropbox.
-With only two configuration-options, it is extremely simple and opinionated. We keep it that. If you need features that are not in this gallery, you probably want other gallery management software.
+A (very) simple webapp on [Sintara](http://www.sinatrarb.com/) with rbdropbox to render an imagegallery with images from dropbox.
+With only two configuration-options, and no admin, or login, it is extremely simple and opinionated. We keep it that. If you need features that are not in this gallery, you probably want other gallery management software.
 
 It runs [my own gallery](http://gallery.webschuur.com)
 
@@ -55,8 +55,9 @@ Items that will not be implemented (unless you fork and add it there, off course
 * recursive directories. This adds such an amount of new problems (how deep? how to present mixed img/subdirs?) that it leads us far from KISS. If you need recursive galleries, you probably need a complexer gallery manager.
 * tagging. Unless we can think of a way to manage this trough dropbox. E.g. in the TODO: EXIF parsing.
 
-## author(s)
+## author(s), Credits
 
 * Thanks to all the shoulders I can stand on: Sinatra, HAML, SASS, Ruby, Phusion
+* CSS and some of the HTML from [FuckFlickr](http://fffff.at/fuckflickr/) but that is -cough-PHP-cough-.
 * Bèr -berkes- Kessels - webschuur.com - ber curlythingy webschuur com
 
