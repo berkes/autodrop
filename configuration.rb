@@ -4,11 +4,11 @@ configure :development do
 
   #You can get a serialised session by running authenticate.rb (@TODO)
   set :session, '---
-- t6cwpu5xvnz4g7w
-- te9am1crwb8thiy
+- 7rwsnb6d5s2w6o1
+- aesfhfq4l5d87ct
 - true
-- 9g55mvnqycbkswc
-- pkbexjkmdirzyur'
+- 7zwb9eoh4rva1r4
+- rpqo56luhrmdmhn'
 end
 
 configure :production do
