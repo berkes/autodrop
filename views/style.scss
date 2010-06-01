@@ -94,6 +94,9 @@ img {
       text-decoration: none;
       &:hover {
         border: 5px solid $highlight;
+        span {
+          opacity: .3;
+        }
       }
 
       span {
