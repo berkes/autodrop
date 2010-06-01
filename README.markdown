@@ -44,7 +44,6 @@ It runs [my own gallery](http://gallery.webschuur.com)
 * Implement download raw version (full file streamed from dropbox).
 * Implement disqus for commenting images.
 * Images are presented as gackground with CSS. weird sizes will be tiled.
-* Imagenames are not rendered nice as titles.
 * Thumbs.jpg are not picked up.
 * Better synching and local-purging of old files.
 
