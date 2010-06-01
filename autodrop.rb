@@ -9,15 +9,18 @@ require 'dropboxcontroller'
 
 get '/' do
   set :base_url, "#{request.env['rack.url_scheme']}://#{request.env['HTTP_HOST']}"
-  drop = DropboxController.new(options)
-  @galleries = drop.dirs
+  drop = AutodropIndex.new(options)
+  @galleries = drop.galleries
   haml :index
 end
 
 get '/gallery/:path' do
   set :base_url, "#{request.env['rack.url_scheme']}://#{request.env['HTTP_HOST']}"
-  drop = DropboxController.new(options)
-  @gallery = drop.images(params[:path])
+
+  @gallery = AutodropGallery.new(params[:path], options)
+
+  return status 404 unless @gallery.valid?
+
   @title = @gallery.title
   @path = @gallery.path
   haml :gallery
@@ -25,15 +28,26 @@ end
 
 get '/gallery/:path/:file' do
   set :base_url, "#{request.env['rack.url_scheme']}://#{request.env['HTTP_HOST']}"
-  drop = DropboxController.new(options)
-  @image = drop.image(params[:path], params[:file])
+
+  session = Dropbox::Session.deserialize(options.session)
+  # do not continue if authorisation is false.
+  return status 404 unless session.authorized?
+
+  @image = AutodropImage.new(params[:file], params[:path], options)
+
+  return status 404 unless @image.valid?
+
   haml :image
 end
 
 get '/image/:size/:path/:file' do
   set :base_url, "#{request.env['rack.url_scheme']}://#{request.env['HTTP_HOST']}"
-  drop = DropboxController.new(options)
-  thumb_path = drop.mirror_file(params[:path], params[:file], params[:size])
+
+  image = AutodropImage.new(params[:file], params[:path], options)
+
+  return status 404 unless image.valid?
+
+  thumb_path = image.mirror_file params[:size]
 
   send_file(thumb_path)
 end

@@ -71,6 +71,8 @@ img {
     text-decoration: none; }
     #directories .preview a:hover {
       border: 5px solid #ff0085; }
+      #directories .preview a:hover span {
+        opacity: .3; }
     #directories .preview a span {
       background-color: white;
       color: #666666;
