@@ -1,18 +1,24 @@
 configure :development do
   set :title, 'berkes` gallery'
-  set :cache_dir, 'photos'
 
   #create a new serialised session with "$ ruby autodrop_session_creator.rb"
   set :session, '
   '
+
+  # Best not to change these, unless you know what you are doing.
+  # They are here not so much as config options, but to avoid hardcoding them all over.
+  set :cache_dir, 'photos'
 end
 
 configure :production do
   set :title, 'berkes` gallery'
-  set :cache_dir, 'photos'
 
   #create a new serialised session with "$ ruby autodrop_session_creator.rb"
   set :session, '
   '
-end
 
+  # Best not to change these, unless you know what you are doing.
+  # They are here not so much as config options, but to avoid hardcoding them all over.
+  set :cache_dir, 'photos'
+  set :memoization, 'true'
+end

@@ -7,6 +7,7 @@ class AutodropIndex
       @session = session
     else
       @session = Dropbox::Session.deserialize(@options.session)
+      @session.enable_memoization if options.memoization
     end
   end
 
@@ -46,6 +47,7 @@ class AutodropImage
       @session = session
     else
       @session = Dropbox::Session.deserialize(@options.session)
+      @session.enable_memoization if options.memoization
     end
     @entry = @session.entry(@path)
   end
@@ -121,8 +123,8 @@ class AutodropGallery
       @session = session
     else
       @session = Dropbox::Session.deserialize(@options.session)
+      @session.enable_memoization if options.memoization
     end
-    @entry
   end
 
   def directory
