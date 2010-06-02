@@ -7,8 +7,7 @@ It runs [my own gallery](http://gallery.webschuur.com)
 
 [Autodrop](http://www.autodrop.nl/), bytheway, is very lekker.
 
-## Eat some
-
+## Eat some Autodrop
 1. Upload images to a special folder in dropbox.
 1. Organize foto's by placing them in directories. Each directory is a gallery.
 1. Move, rename, delete or publish new ones, by organising them on your desktop (dropbox).
@@ -21,20 +20,18 @@ It runs [my own gallery](http://gallery.webschuur.com)
 * Optionally change the haml and sass in views/ to change the style.
 
 ## Usage
-
 * add directories: each directory becomes a gallery
 * optionally add a file thumb.jpg (or thumb.png/gif etc) to have that show up as thumbnail for the gallery.
 * add other images to the directory: as many as you want.
 
 
 ## Tips and Gotcha's
-
 * underscores (_) in file and directorynames will be replaced with spaces in output.
 * pluses in files give trouble with the API, don't use them. Files with pluses will be ignored.
 * To hide a directory, start a directory with a dot, on unix (linux, mac) these are hidden directories.
 
 ## @TODO and known bugs
-
+* Better performance. Some ruby magic to keep sessions and metadata in global space, to avoid all classes hitting dropbox for all files. 
 * Clean up!
 * Next and previous links on full image view.
 * Prettier design :).
@@ -48,15 +45,12 @@ It runs [my own gallery](http://gallery.webschuur.com)
 * Better synching and local-purging of old files.
 
 ## Not @TODO
-
 Items that will not be implemented (unless you fork and add it there, off course!).
 
 * recursive directories. This adds such an amount of new problems (how deep? how to present mixed img/subdirs?) that it leads us far from KISS. If you need recursive galleries, you probably need a complexer gallery manager.
 * tagging. Unless we can think of a way to manage this trough dropbox. E.g. in the TODO: EXIF parsing.
 
 ## author(s), Credits
-
 * Thanks to all the shoulders I can stand on: Sinatra, HAML, SASS, Ruby, Phusion
 * CSS and some of the HTML from [FuckFlickr](http://fffff.at/fuckflickr/) but that is -cough-PHP-cough-.
 * Bèr -berkes- Kessels - webschuur.com - ber curlythingy webschuur com
-
