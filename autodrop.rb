@@ -8,7 +8,7 @@ require 'configuration'
 require 'dropboxcontroller'
 
 get '/' do
-  drop = AutodropIndex.new(options)
+  drop = AutodropIndex.new(options.session)
   @galleries = drop.galleries
   haml :index
 end
