@@ -65,7 +65,7 @@ img {
 }
 
 #footer {
-  padding: 60px $gutter_l 0 $gutter_r;
+  padding-top: 60px;
   clear: both;
   color: $dark;
 }
@@ -85,11 +85,10 @@ img {
       border: 5px solid transparent; /* pimped out on hover */
       width: 110px;  /* 120px - 2*border */
       height: 70px; /* 80px - 2*border */
-      background-position: center center;
-      background-color: black;
-      background-repeat: no-repeat;
+      background-position: -5px -5px;
       overflow: hidden;
       text-align: center;
+      background-color: black;
       margin: 0 6px 5px 0;
       padding-top: 10px;
       text-decoration: none;

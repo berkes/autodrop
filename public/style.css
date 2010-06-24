@@ -42,7 +42,7 @@ img {
   clear: both; }
 
 #footer {
-  padding: 60px 20px 0 20px;
+  padding-top: 60px;
   clear: both;
   color: #666666; }
 
@@ -62,11 +62,10 @@ img {
     /* 120px - 2*border */
     height: 70px;
     /* 80px - 2*border */
-    background-position: center center;
-    background-color: black;
-    background-repeat: no-repeat;
+    background-position: -5px -5px;
     overflow: hidden;
     text-align: center;
+    background-color: black;
     margin: 0 6px 5px 0;
     padding-top: 10px;
     text-decoration: none; }
