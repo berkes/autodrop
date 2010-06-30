@@ -9,6 +9,9 @@ configure :development do
   # They are here not so much as config options, but to avoid hardcoding them all over.
   set :cache_dir, 'photos'
   set :memoization, 'false'
+  
+  # Disqus developer, to allow local development with disqus enabled. 
+  set :disqus_developer, 1
 end
 
 configure :production do
@@ -22,4 +25,7 @@ configure :production do
   # They are here not so much as config options, but to avoid hardcoding them all over.
   set :cache_dir, 'photos'
   set :memoization, 'true'
+  
+  # Disqus developer must be disabled on production!
+  set :disqus_developer, 0
 end
