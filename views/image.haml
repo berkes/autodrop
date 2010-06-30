@@ -18,4 +18,18 @@
                :type => "text",
                :size => "24",
                :value => "&lt;a href=&quot;#{base_url}/#{@image.permalink}&quot;&gt;&lt;img src=&quot;#{@image.src('l')}&quot; alt=&quot;#{@image.title}&quot; title=&quot;#{@image.title}&quot; border=&quot;0&quot; /&gt;&lt;/a&gt;"}
+               
+#disqus_thread
+:javascript
+  var disqus_developer = #{options.disqus_developer};
+  var disqus_identifier = "#{@image.permalink}";
+  (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://berkes-pictures.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=berkes-pictures">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
 
