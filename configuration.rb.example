@@ -8,7 +8,7 @@ configure :development do
   # Best not to change these, unless you know what you are doing.
   # They are here not so much as config options, but to avoid hardcoding them all over.
   set :cache_dir, 'photos'
-  set :memoization, 'true'
+  set :memoization, 'false'
 end
 
 configure :production do
