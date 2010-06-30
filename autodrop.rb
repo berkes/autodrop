@@ -52,3 +52,9 @@ get '/image/:size/:path/:file' do
   send_file(thumb_path)
 end
 
+get '/rebuild/index' do
+  drop = AutodropIndex.new(options)
+  drop.build_galleries
+  return "rebuild!"
+end
+

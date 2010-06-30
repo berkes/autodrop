@@ -22,7 +22,7 @@ class AutodropIndex
       # is this dir valid? then add to a list of dirs
       # else, continue, without adding to the list of dirs
       gallery = AutodropGallery.new(d.path, @options, @session) if d.directory?
-
+      gallery.build_gallery
       galleries << gallery if gallery.valid?
     end
 
@@ -144,7 +144,13 @@ class AutodropGallery
       @session.enable_memoization if options.memoization
     end
   end
-
+  
+  def build_gallery
+    images.each do |image|
+      image.mirror_file('m')
+    end
+  end
+  
   def directory
     @session.directory(@gallery)
   end
