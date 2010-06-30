@@ -81,7 +81,7 @@ class AutodropImage
   end
 
   def src(size = 'm')
-    "#{base_url}/image/#{size}/#{@path}"
+    "#{@base_url}/image/#{size}/#{@path}"
   end
 
   def permalink
