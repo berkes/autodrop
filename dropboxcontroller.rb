@@ -13,7 +13,7 @@ class AutodropIndex
 
   # returns a list of directories in the "containing dir" as set in config. possibly an empty list.
   # or returns nil if an error occurred (e.g. dir is not found)
-  def galleries
+  def build_galleries
     galleries = []
     root_dir = AutodropGallery.new('/', @options, @session)
 
@@ -28,6 +28,24 @@ class AutodropIndex
 
     # return the list of dirs, even if it is an empty list.
     return galleries
+  end
+
+  #hackish quick solution to boost performance. Will be dealt with in future rewrite.
+  def galleries
+    galleries = []
+    Dir.glob("#{@options.cache_dir}/*").each do |path| 
+      name = path.split('/').last
+      puts name
+      gallery = {}
+      gallery[:title] = name.gsub(/[_]/, ' ').capitalize
+      puts (gallery[:path] = "gallery/#{name}")
+      thumb = Dir.glob("#{path}/*/thumb.*").first
+      thumb = Dir.glob("#{path}/*/*.*").first unless thumb # else take the first image.
+      thumb = thumb.split('/').last
+      puts (gallery[:thumb] = "image/m/#{name}/#{thumb}")
+      galleries << gallery
+    end
+    galleries
   end
 end
 
